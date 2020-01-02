@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+
+
+    <link href="https://nightly.datatables.net/select/css/select.dataTables.css?_=9a6592f8d74f8f520ff7b22342fa1183.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/select/js/dataTables.select.js?_=9a6592f8d74f8f520ff7b22342fa1183"></script>
+
+            
+    
+    <meta charset=utf-8 />
+    <title>DataTables - JS Bin</title>
+  </head>
+  <body>
+   <script>
+     $(document).ready( function () {
+  var table = $('#example').DataTable({
+    columnDefs: [{
+      orderable: false,
+      className: 'select-checkbox',      
+      targets: 0
+    }],
+    select: {
+      style:    'os',
+      selector: 'td:first-child'
+    },    
+    order: [[1,'asc']]
+  });
+  
+  $('#example').on('click', '#select_all', function() {
+    if ($('#select_all:checked').val() === 'on') {
+      table.rows().select();
+    }
+    else {
+      table.rows().deselect();
+    }
+      
+  });  
+} );
+     
+   </script>
+   
+    <div class="container">
+      <table id="example" class="display nowrap" width="100%">
+        <thead>
+          <tr>
+            <th>Select All<input type="checkbox" id="select_all" name="select_invoice" /></th>
+            
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+          <tr>
+            <td/>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$3,120</td>
+          </tr>
+          <tr>
+            <td/>
+            <td>Garrett Winters</td>
+            <td>Director</td>
+            <td>Edinburgh</td>
+            <td>63</td>
+            <td>2011/07/25</td>
+            <td>$5,300</td>
+          </tr>
+          <tr>
+            <td/>
+            <td>Ashton Cox</td>
+            <td>Technical Author</td>
+            <td>San Francisco</td>
+            <td>66</td>
+            <td>2009/01/12</td>
+            <td>$4,800</td>
+          </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
