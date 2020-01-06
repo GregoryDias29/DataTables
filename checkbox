@@ -1,0 +1,26 @@
+<script>
+var button = document.getElementById('button1');
+button.onclick = function() {
+	var inputs = document.getElementsByTagName('input');				
+	for(var i = 0; i < inputs.length; i++) {
+		var item = inputs[i];
+		if(item.checked) {
+			item.nextSibling.nodeValue = item.id + " [checked]"
+		}
+		else {
+			item.nextSibling.nodeValue = item.id;
+		}
+	}
+}
+</script>
+
+<input type="checkbox" id="test1">test1<br>
+<input type="checkbox" id="test2">test2<br>
+<input type="checkbox" id="test3">test3<br>
+<input type="checkbox" id="test4">test4<br>
+	
+<button id="button1">Go!</button>
+
+
+
+<--! http://live.datatables.net/jowakeya/216/edit -->
