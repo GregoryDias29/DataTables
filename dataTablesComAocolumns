@@ -1,0 +1,104 @@
+<script>
+faker.locale = "pt_BR"
+
+var dataLimite = new Date("Sat Sep 20 1992 21:35:02 GMT+0200 (CEST)");
+var tableTarefas = $("#tableTarefas");
+var btSource = $("#btSource");
+
+var mockPessoas = function () {
+  var pessoas = [];
+  for (var indice = 0; indice < 20; indice++) {
+    var pessoa = {};
+    var firstName = faker.name.firstName();
+    var lastName = faker.name.lastName();
+
+    pessoa.id = indice;
+    pessoa.nascimento = faker.date.past(50, dataLimite).toLocaleDateString();  
+    pessoa.nome =  faker.name.findName(firstName, lastName);
+
+    pessoa.endereco = faker.address.streetAddress();
+    pessoa.cidade = faker.address.city();
+    pessoa.estado = faker.address.stateAbbr();
+    pessoa.cep = faker.address.zipCode();
+    pessoa.pais = faker.locales[faker.locale].address.default_country;
+    pessoa.phone =  faker.phone.phoneNumber();
+    pessoa.username =  faker.internet.userName(firstName, lastName);
+    pessoa.senha =  faker.internet.password();
+    pessoa.email =  faker.internet.email(firstName, lastName);
+    pessoas.push(pessoa);
+  }
+  return pessoas;
+}
+
+var oTable = tableTarefas.DataTable({
+  "columns": [
+    { "data": "nome", "name": "Nome",   "targets": 0 },
+    { "data": "nascimento", "name": "Nascimento",  "targets": 1 },
+    { "data": "endereco", "name": "Endereco", "targets": 2 },
+    { "data": "cidade", "name": "Cidade",  "targets": 3 },
+    { "data": "estado", "name": "Estado",    "targets": 4 },
+    { "data": "pais", "name": "Pais",  "targets": 5 },
+    { "data": "cep", "name": "Cep", "targets": 6 },
+    { "data": "phone", "name": "Phone",  "targets": 7 },
+    { "data": "username", "name": "Username",    "targets": 8 },
+    { "data": "senha", "name": "Senha",  "targets": 9 },
+    { "data": "email", "name": "Email", "targets": 10 }
+  ],
+  "fnRowCallback": function(linha, data) {
+    var link = document.createElement("a");
+    link.id = "edit";
+    link.href = "#";
+    link.dataset.id = data.id;
+    link.textContent = data.nome;
+    linha.cells[0].textContent = "";
+    linha.cells[0].appendChild(link);
+  }
+});
+
+var atualizarPessoas = function () {
+  var pessoas = mockPessoas();  
+  pessoas.forEach(function (pessoa, indice) {
+    oTable.row.add(pessoa);
+  });
+  oTable.draw();
+}
+
+atualizarPessoas();
+btSource.on("click", function () {
+  oTable.clear();
+  atualizarPessoas();
+});
+
+</script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.2/material.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/css/dataTables.material.css" rel="stylesheet"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.0.1/faker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.2/material.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.11/js/dataTables.material.js"></script>
+
+<button id="btSource" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Mudar Lista de Pessoas</button>
+<div class="table-responsive mdl-data-table">
+  <table id="tableTarefas" class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Nascimento</th>
+        <th>Endereco</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Pais</th>
+        <th>Cep</th>
+        <th>Phone</th>
+        <th>Username</th>
+        <th>Senha</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
